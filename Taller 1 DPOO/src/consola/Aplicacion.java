@@ -4,7 +4,7 @@ public class Aplicacion
 {
 	public void ejecutarAplicacion()
 	{
-		System.out.println("Estadísticas sobre los Juegos Olímpicos\n");
+		System.out.println("Hamburguesas y hamburguesas\n");
 
 		boolean continuar = true;
 		while (continuar)
@@ -66,8 +66,8 @@ public class Aplicacion
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Aplicacion app = new Aplicacion();
+		app.ejecutarAplicacion();
 	}
 
 }
