@@ -42,7 +42,7 @@ public class Aplicacion
 	}
 
 	private void nada() {
-		/** clase provisional que no hace nada */
+		/** método provisional que no hace nada */
 	}
 
 	private String input(String string) {
@@ -57,12 +57,12 @@ public class Aplicacion
 	public void mostrarMenu()
 	{
 		System.out.println("\nOpciones de la aplicación\n");
-		System.out.println("1. Cargar un archivo de atletas");
-		System.out.println("2. Consultar los atletas de un año dado");
-		System.out.println("3. Consultar las medallas de un atleta en un periodo");
-		System.out.println("4. Consultar los atletas de un país dado");
+		System.out.println("1. Mostrar menú");
+		System.out.println("2. Iniciar un nuevo pedido");
+		System.out.println("3. Agregar un elemento a un pedido");
+		System.out.println("4. Cerrar un pedido y guardar la factura");
 		System.out.println("5. Consultar el país con más medallistas");
-		System.out.println("0. Consultar todos los medallistas de un evento dado");
+		System.out.println("0. Consultar la información de un pedido dado su id");
 	}
 	
 	public static void main(String[] args) {
