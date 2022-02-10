@@ -42,7 +42,7 @@ public class Aplicacion
 	}
 
 	private void nada() {
-		/** clase provisional que no hace nada*/
+		/** clase provisional que no hace nada */
 	}
 
 	private String input(String string) {
