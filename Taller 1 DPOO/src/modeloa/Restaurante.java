@@ -23,10 +23,27 @@ public class Restaurante {
 		
 	}
 	
-	private void cargarIngredientes(File archivoIngredientes) throws IOException
+	private void cargarIngredientes(File archivoIngredientes) throws IOException,FileNotFoundException
 	{
 		
 		FileReader file = new FileReader("Taller 1 DPOO/Data/ingredientes.txt");
+		BufferedReader br = new BufferedReader(file);
+		String message = "";
+		String line = br.readLine();
+		while(line != null)
+		{
+			message += line + " ";
+			line = br.readLine();
+		}
+		System.out.println(message);
+		br.close();
+		
+	}
+	
+	private void cargarMenu(File archivoMenu) throws IOException, FileNotFoundException
+	{
+		
+		FileReader file = new FileReader("Taller 1 DPOO/Data/menu.txt");
 		BufferedReader br = new BufferedReader(file);
 		String message = "";
 		String line = br.readLine();
