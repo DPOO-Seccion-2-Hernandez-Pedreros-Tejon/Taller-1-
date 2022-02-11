@@ -23,7 +23,7 @@ public class Restaurante {
 		
 	}
 	
-	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos)
+	public void cargarInformacionRestaurante() throws FileNotFoundException, IOException
 	{
 		
 		 cargarCombos();
