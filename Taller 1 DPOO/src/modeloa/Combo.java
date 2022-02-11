@@ -8,6 +8,7 @@ public class Combo implements IProducto
 	private double descuento;
 	private String nombreCombo;
 	private ArrayList<ProductoMenu> itemsCombo;
+	private int precio = 0;
 	
 	public Combo(String nombreCo, double descuentoCo)
 	{
@@ -15,28 +16,26 @@ public class Combo implements IProducto
 		descuento = descuentoCo;
 		itemsCombo = new ArrayList<ProductoMenu>();
 	}
-	
-	public void agregarItemACombo(IProducto itemCombo)
+
+	public void agregarItemACombo(ProductoMenu itemCombo)
 	{
-		itemsCombo.add((ProductoMenu)itemCombo);
+		itemsCombo.add(itemCombo);
+		precio += itemCombo.getPrecio();
 	}
 	
-	@Override
-	public int getPrecio() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getPrecio() 
+	{	
+		return precio; 
 	}
 
-	@Override
-	public String getNombre() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getNombre() 
+	{
+		return nombreCombo;
 	}
 
-	@Override
-	public String generarTextoFactura() {
-		// TODO Auto-generated method stub
-		return null;
+	public String generarTextoFactura() 
+	{
+		return (nombreCombo + "      $" + Integer.toString(precio));
 	}
 
 }

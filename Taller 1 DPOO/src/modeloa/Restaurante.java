@@ -6,7 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Restaurante {
+public class Restaurante 
+{
 
 	/** no hay atributos de Restaurante*/
 
