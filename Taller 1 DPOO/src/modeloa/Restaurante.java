@@ -23,7 +23,15 @@ public class Restaurante {
 		
 	}
 	
-	private void cargarIngredientes(File archivoIngredientes) throws IOException,FileNotFoundException
+	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos)
+	{
+		
+		 cargarCombos();
+		 cargarIngredientes();
+		 cargarMenu();
+	}
+	
+	private void cargarIngredientes() throws IOException,FileNotFoundException
 	{
 		
 		FileReader file = new FileReader("Taller 1 DPOO/Data/ingredientes.txt");
@@ -40,7 +48,7 @@ public class Restaurante {
 		
 	}
 	
-	private void cargarMenu(File archivoMenu) throws IOException, FileNotFoundException
+	private void cargarMenu() throws IOException, FileNotFoundException
 	{
 		
 		FileReader file = new FileReader("Taller 1 DPOO/Data/menu.txt");
@@ -57,4 +65,21 @@ public class Restaurante {
 		
 	}
 	
+	
+	private void cargarCombos() throws IOException, FileNotFoundException
+	{
+		
+		FileReader file = new FileReader("Taller 1 DPOO/Data/combos.txt");
+		BufferedReader br = new BufferedReader(file);
+		String message = "";
+		String line = br.readLine();
+		while(line != null)
+		{
+			message += line + " ";
+			line = br.readLine();
+		}
+		System.out.println(message);
+		br.close();
+		
+	}
 }
