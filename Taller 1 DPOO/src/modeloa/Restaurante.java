@@ -5,17 +5,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class Restaurante {
+public class Restaurante 
+{
 
-	/** no hay atributos de Restaurante*/
-
+	private ArrayList<Ingrediente> ingredientes;
 	
-	// ************************************************************************
-	// métodos
-	// ************************************************************************
+	public Restaurante() 
+	{
+		
+	}
 	
-	/** inicia un nuevo pedido */
 	public void iniciarPedido(String nombreCliente, String direccionCliente)
 	{
 		
@@ -23,12 +24,13 @@ public class Restaurante {
 		
 	}
 	
+	
 	public void cargarInformacionRestaurante() throws FileNotFoundException, IOException
 	{
 		
 		 cargarCombos();
-		 cargarIngredientes();
-		 cargarMenu();
+		 //cargarIngredientes();
+		 //cargarMenu();
 	}
 	
 	private void cargarIngredientes() throws IOException,FileNotFoundException

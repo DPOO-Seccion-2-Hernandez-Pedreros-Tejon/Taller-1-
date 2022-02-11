@@ -1,8 +1,17 @@
 package src.consola;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import src.modeloa.Restaurante;
+
 public class Aplicacion 
 {
-	public void ejecutarAplicacion()
+	private Restaurante rest = new Restaurante();
+	
+	public void ejecutarAplicacion() throws FileNotFoundException, IOException
 	{
 		System.out.println("Hamburguesas y hamburguesas\n");
 
@@ -14,7 +23,7 @@ public class Aplicacion
 				mostrarMenu();
 				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
 				if (opcion_seleccionada == 1)
-					nada();
+					rest.cargarInformacionRestaurante();
 				else if (opcion_seleccionada == 2)
 					nada();
 				else if (opcion_seleccionada == 3)
@@ -45,8 +54,19 @@ public class Aplicacion
 		/** método provisional que no hace nada. */
 	}
 
-	private String input(String string) {
-		// TODO Auto-generated method stub
+	public String input(String mensaje)
+	{
+		try
+		{
+			System.out.print(mensaje + ": ");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			return reader.readLine();
+		}
+		catch (IOException e)
+		{
+			System.out.println("Error leyendo de la consola");
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -65,7 +85,8 @@ public class Aplicacion
 		System.out.println("0. Consultar la información de un pedido dado su id");
 	}
 	
-	public static void main(String[] args) {
+
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		Aplicacion app = new Aplicacion();
 		app.ejecutarAplicacion();
 	}
