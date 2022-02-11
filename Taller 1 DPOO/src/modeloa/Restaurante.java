@@ -1,4 +1,4 @@
-package modeloa;
+package src.modeloa;
 
 import java.io.File;
 
