@@ -38,23 +38,35 @@ public class Pedido
 		return precio;
 	}
 	
-	private double getPrecioIva()
+	private int getPrecioIva()
 	{
-		return 19.0 * this.getPrecioNeto() / 100.0;
+		return (int)(19.0 * this.getPrecioNeto() / 100.0);
 	}
 	
 	private int getPrecioTotal()
 	{
-		return (int)(this.getPrecioNeto() + this.getPrecioIva());
+		return this.getPrecioNeto() + this.getPrecioIva();
 	}
 	
 	private String generarTextoFactura()
 	{
+		String txtProductos = "";
+		
+		for(IProducto producto: itemsPedido)
+		{
+			txtProductos += "   " + producto.getNombre() + ": 		 $" + Integer.toString(producto.getPrecio())+ "/n";
+		}
+		
 		return "			NOMBRE RESTAURANTE/n"
 				+ "/n"
-				+ "   ID DEL PEDIDO:		 " + Integer.toString(this.getIdPedido()) +"/n"
+				+ "   ID DEL PEDIDO:		" + Integer.toString(this.getIdPedido()) + "/n"
+				+ "   NOMBRE DEL CLIENTE: 		" + nombreCliente + "/n"
+				+ "   DIRECCIÓN DE FACTURACIÓN: 		 " + direccionCliente + "/n"
 				+ "/n"
-				+ "PRODUCTOS DE LA ORDEN		PRECIO/n"
-				+ "";
+				+ "   PRODUCTOS DE LA ORDEN 		PRECIO/n"
+				+ txtProductos + "/n"
+				+ "   VALOR NETO DEL PEDIDO:		 $" + Integer.toString(this.getPrecioNeto()) + "/n"
+				+ "   VALOR DEL IVA DEL PEDIDO:		 $" + Integer.toString(this.getPrecioIva()) + "/n"
+				+ "   VALOR TOTAL DEL PEDIDO:		 $" + Integer.toString(this.getPrecioTotal()) + "/n/n";
 	}
 }
