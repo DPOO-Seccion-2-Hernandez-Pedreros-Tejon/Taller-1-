@@ -22,7 +22,7 @@ public class ProductoMenu implements IProducto
 	} 
 	
 	public String generarTextoFactura() {
-		return nombre + ":      $" + precioBase;
+		return "   " + nombre + ": 		$" + precioBase + "/n";
 	}
 
 }

@@ -20,7 +20,7 @@ public class Combo implements IProducto
 	public void agregarItemACombo(ProductoMenu itemCombo)
 	{
 		itemsCombo.add(itemCombo);
-		precio += itemCombo.getPrecio() - descuento * 100 / itemCombo.getPrecio();	
+		precio += itemCombo.getPrecio() - descuento / 100 * itemCombo.getPrecio();	
 	}
 	
 	public int getPrecio() 
@@ -35,7 +35,7 @@ public class Combo implements IProducto
 
 	public String generarTextoFactura() 
 	{
-		return (nombreCombo + ":      $" + Integer.toString(precio));
+		return ("   " + nombreCombo + ": 		$" + Integer.toString(precio) + "/n");
 	}
 
 }

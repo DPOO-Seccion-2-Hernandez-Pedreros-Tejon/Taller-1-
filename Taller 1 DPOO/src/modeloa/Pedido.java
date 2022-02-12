@@ -1,5 +1,9 @@
 package src.modeloa;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Pedido 
@@ -54,10 +58,10 @@ public class Pedido
 		
 		for(IProducto producto: itemsPedido)
 		{
-			txtProductos += "   " + producto.getNombre() + ": 		 $" + Integer.toString(producto.getPrecio())+ "/n";
+			txtProductos += producto.generarTextoFactura();
 		}
 		
-		return "			NOMBRE RESTAURANTE/n"
+		return "			HAMBURGUESAS Y HAMBURGUESAS/n"
 				+ "/n"
 				+ "   ID DEL PEDIDO:		" + Integer.toString(this.getIdPedido()) + "/n"
 				+ "   NOMBRE DEL CLIENTE: 		" + nombreCliente + "/n"
@@ -69,4 +73,18 @@ public class Pedido
 				+ "   VALOR DEL IVA DEL PEDIDO:		 $" + Integer.toString(this.getPrecioIva()) + "/n"
 				+ "   VALOR TOTAL DEL PEDIDO:		 $" + Integer.toString(this.getPrecioTotal()) + "/n/n";
 	}
+	
+	public void guardarFactura(File archivo) throws IOException
+	{
+		File file = new File("/path/to/" + "FACTURA#" + Integer.toString(idPedido) + ".txt");
+		if(file.createNewFile())
+			System.out.println("File created: " + file.getName());
+		else
+			System.out.println("File already exists.");
+		
+		BufferedWriter writer = new BufferedWriter(new FileWriter("/path/to/" + "FACTURA#" + Integer.toString(idPedido) + ".txt"));
+		writer.write(this.generarTextoFactura());
+		writer.close();
+	}
+	
 }

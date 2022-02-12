@@ -34,7 +34,7 @@ public class Restaurante
 	private void cargarIngredientes() throws IOException,FileNotFoundException
 	{
 		
-		FileReader file = new FileReader("Taller 1 DPOO/Data/ingredientes.txt");
+		FileReader file = new FileReader("Data/ingredientes.txt");
 		BufferedReader br = new BufferedReader(file);
 		String message = "";
 		String line = br.readLine();
@@ -51,7 +51,7 @@ public class Restaurante
 	private void cargarMenu() throws IOException, FileNotFoundException
 	{
 		
-		FileReader file = new FileReader("Taller 1 DPOO/Data/menu.txt");
+		FileReader file = new FileReader("Data/menu.txt");
 		BufferedReader br = new BufferedReader(file);
 		String message = "";
 		String line = br.readLine();
@@ -69,7 +69,7 @@ public class Restaurante
 	private void cargarCombos() throws IOException, FileNotFoundException
 	{
 		
-		FileReader file = new FileReader("Taller 1 DPOO/Data/combos.txt");
+		FileReader file = new FileReader("Data/combos.txt");
 		BufferedReader br = new BufferedReader(file);
 		String message = "";
 		String line = br.readLine();
