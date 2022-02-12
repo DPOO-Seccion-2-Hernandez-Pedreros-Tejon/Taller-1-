@@ -18,9 +18,7 @@ public class Restaurante
 	}
 	
 	public void iniciarPedido(String nombreCliente, String direccionCliente)
-	{
-		
-		
+	{	
 		
 	}
 	

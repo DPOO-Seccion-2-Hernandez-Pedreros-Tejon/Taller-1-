@@ -35,7 +35,7 @@ public class Combo implements IProducto
 
 	public String generarTextoFactura() 
 	{
-		return (nombreCombo + "      $" + Integer.toString(precio));
+		return (nombreCombo + ":      $" + Integer.toString(precio));
 	}
 
 }
