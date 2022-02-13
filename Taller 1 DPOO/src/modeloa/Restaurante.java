@@ -239,6 +239,30 @@ public class Restaurante
 		System.out.println("\nSe ha guardado la factura y se ha cerrado el pedido\n");
 	}
 	
+	public void buscarPedido(int id)
+	{
+		Pedido pedidoBuscado = null;
+		
+		for(Pedido pedido: pedidos)
+		{
+			if(((Integer)pedido.getIdPedido()).equals(id))
+			{
+				pedidoBuscado = pedido;
+				break;
+			}
+		}
+		
+		if(pedidoBuscado == null)
+		{
+			System.out.println("\nNo se encontró un pedido con ese código ID\n");
+		}
+		
+		else
+		{
+			System.out.println(pedidoBuscado.generarTextoFactura());
+		}
+	}
+	
 	public String input(String mensaje)
 	{
 		try

@@ -53,7 +53,7 @@ public class Pedido
 		return this.getPrecioNeto() + this.getPrecioIva();
 	}
 	
-	private String generarTextoFactura()
+	public String generarTextoFactura()
 	{
 		String txtProductos = "";
 		

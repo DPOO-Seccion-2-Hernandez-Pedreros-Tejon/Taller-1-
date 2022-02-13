@@ -4,10 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 import src.modeloa.IProducto;
-import src.modeloa.Ingrediente;
 import src.modeloa.Restaurante;
 
 public class Aplicacion 
@@ -36,7 +34,7 @@ public class Aplicacion
 				else if (opcion_seleccionada == 4)
 					rest.cerrarYGuardarPedido();
 				else if (opcion_seleccionada == 5)
-					nada();
+					buscarPedido();
 				else if (opcion_seleccionada == 0)	
 				{
 					System.out.println("Saliendo de la aplicación ...");
@@ -53,10 +51,6 @@ public class Aplicacion
 				System.out.println("Debe seleccionar uno de los números de las opciones.");
 			}
 		}
-	}
-
-	private void nada() {
-		/** mÃ©todo provisional que no hace nada. */
 	}
 
 	public String input(String mensaje)
@@ -114,6 +108,12 @@ public class Aplicacion
 		IProducto producto = rest.hallarProducto(Integer.parseInt(noProducto) - 1);
 		rest.getPedidoEnCurso().agregarProducto(producto);
 		System.out.println("\nSe ha agregado el producto al pedido\n");
+	}
+	
+	public void buscarPedido()
+	{
+		int id = Integer.parseInt(input("Ingrese el id de un pedido"));
+		rest.buscarPedido(id);
 	}
 	
 
