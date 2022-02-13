@@ -5,42 +5,56 @@ import java.util.ArrayList;
 public class ProductoAjustado implements IProducto
 {
 	
-	private ProductoMenu base;
 	private ArrayList<Ingrediente> agregados;
 	private ArrayList<Ingrediente> eliminados;
-	private int precioFinal;
+	private int precioInicial;
+	private String nombre;
 
-	public ProductoAjustado( ProductoMenu base)
+	public ProductoAjustado( String pnombre, int precioBase)
 	{
-		
-		this.base = base;
+		nombre = pnombre;
 		agregados = new ArrayList<Ingrediente>();
-		agregados = new ArrayList<Ingrediente>();
-
+		eliminados = new ArrayList<Ingrediente>();
+		precioInicial = precioBase;
 	}
 	
-	public int getPrecio() {
-		int rta = base.getPrecio();
-		for (int i = 0; i < agregados.size(); i++)
-		{
-			
-		}
-		return 0;
-	}
-
-	public String getNombre() {
-		return null;
-	}
-
-	public String generarTextoFactura() {
-		
-		return base.generarTextoFactura();
-	}
-
-	public void agregarAAgregados(Ingrediente ingr)
+	public void agregarIngrediente(Ingrediente ingrediente)
 	{
-		agregados.add(ingr);
-		
+		agregados.add(ingrediente);
+	}
+	
+	public void eliminarIngrediente(Ingrediente ingrediente)
+	{
+		eliminados.add(ingrediente);
+	}
+	
+	public int getPrecio() 
+	{	
+		int precioAdicional = 0;
+		for(Ingrediente ingrediente: agregados)
+		{
+			precioAdicional += ingrediente.getCosto();
+		}
+		return precioInicial + precioAdicional;
+	}
+
+	public String getNombre() 
+	{
+		String nombreAdicional = "";
+		for(Ingrediente ingrediente: agregados)
+		{
+			nombreAdicional += (" con " + ingrediente.getNombre()); 
+		}
+		for(Ingrediente ingrediente: eliminados)
+		{
+			nombreAdicional += (" sin " + ingrediente.getNombre()); 
+		}
+		return nombre + nombreAdicional;
+	}
+
+	public String generarTextoFactura() 
+	{
+		return ("   " + this.getNombre() + ": 		$" + Integer.toString(this.getPrecio()) + "\n");
 	}
 	
 }

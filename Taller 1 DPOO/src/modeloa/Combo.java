@@ -1,24 +1,19 @@
 package src.modeloa;
 
-import java.util.ArrayList;
-
 public class Combo implements IProducto
 {
 
 	private double descuento;
 	private String nombreCombo;
-	private ArrayList<ProductoMenu> itemsCombo;
 	private int precio = 0;
 	
-	public Combo(String nombreCo, double descuentoCo, ArrayList<ProductoMenu> itemsCo)
+	public Combo(String nombreCo, double descuentoCo)
 	{
 		nombreCombo = nombreCo;
 		descuento = descuentoCo;
-		itemsCombo = itemsCo;
 	}
-	public void agregarItemACombo(ProductoMenu itemCombo)
+	public void agregarItemACombo(ProductoAjustado itemCombo)
 	{
-		itemsCombo.add(itemCombo);
 		precio += itemCombo.getPrecio() - descuento / 100 * itemCombo.getPrecio();	
 	}
 	
@@ -34,7 +29,7 @@ public class Combo implements IProducto
 
 	public String generarTextoFactura() 
 	{
-		return ("   " + nombreCombo + ": 		$" + Integer.toString(precio) + "/n");
+		return ("   " + nombreCombo + ": 		$" + Integer.toString(this.getPrecio()) + "\n");
 	}
 
 }

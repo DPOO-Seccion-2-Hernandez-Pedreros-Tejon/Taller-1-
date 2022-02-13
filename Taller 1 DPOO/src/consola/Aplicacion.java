@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import src.modeloa.IProducto;
 import src.modeloa.Ingrediente;
 import src.modeloa.Restaurante;
 
@@ -16,39 +17,40 @@ public class Aplicacion
 	
 	public void ejecutarAplicacion() throws FileNotFoundException, IOException
 	{
-		System.out.println("Hamburguesas y hamburguesas\n");
+		System.out.println("Hamburguesas & Hamburguesas\n");
 
 		boolean continuar = true;
+		rest.cargarInformacionRestaurante();
 		while (continuar)
 		{
 			try
 			{
 				mostrarMenu();
-				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opciÃ³n"));
+				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
 				if (opcion_seleccionada == 1)
-					rest.cargarInformacionRestaurante();
+					rest.mostrarProductos();
 				else if (opcion_seleccionada == 2)
-					nada();
+					iniciarPedido();
 				else if (opcion_seleccionada == 3)
-					nada();
+					agregarProducto();
 				else if (opcion_seleccionada == 4)
-					nada();
+					rest.cerrarYGuardarPedido();
 				else if (opcion_seleccionada == 5)
 					nada();
 				else if (opcion_seleccionada == 0)	
 				{
-					System.out.println("Saliendo de la aplicaciÃ³n ...");
+					System.out.println("Saliendo de la aplicación ...");
 					continuar = false;
 				}
 				
 				else
 				{
-					System.out.println("Por favor seleccione una opciÃ³n vÃ¡lida.");
+					System.out.println("Por favor seleccione una opción válida.");
 				}
 			}
 			catch (NumberFormatException e)
 			{
-				System.out.println("Debe seleccionar uno de los nÃºmeros de las opciones.");
+				System.out.println("Debe seleccionar uno de los números de las opciones.");
 			}
 		}
 	}
@@ -79,13 +81,39 @@ public class Aplicacion
 	 */
 	public void mostrarMenu()
 	{
-		System.out.println("\nOpciones de la aplicaciÃ³n\n");
-		System.out.println("1. Mostrar menÃº");
+		System.out.println("\nOpciones de la aplicación\n");
+		System.out.println("1. Mostrar menú");
 		System.out.println("2. Iniciar un nuevo pedido");
 		System.out.println("3. Agregar un elemento a un pedido");
 		System.out.println("4. Cerrar un pedido y guardar la factura");
-		System.out.println("5. Consultar el paÃ­s con mÃ¡s medallistas");
-		System.out.println("0. Consultar la informaciÃ³n de un pedido dado su id");
+		System.out.println("5. Consultar la información de un pedido dado su id");
+		System.out.println("0. Salir de la aplicación");
+	}
+	
+	public void iniciarPedido()
+	{
+		String nombre = input("Ingrese su nombre para el pedido");
+		String direccion = input("Ingrese su dirección para el pedido");
+		rest.iniciarPedido(nombre, direccion);
+		System.out.println("\nSe ha iniciado un nuevo pedido para " + nombre + " en la dirección: " + direccion);
+	}
+	
+	public void agregarProducto()
+	{
+		if(rest.getPedidoEnCurso() == null)
+		{
+			System.out.println("\nTiene que tener un pedido en curso para agregar productos\n");
+			return;
+		}
+		rest.mostrarProductos();
+		String noProducto = input("\nIngrese el número del producto que quiere agregar (si quiere volver al menú, ingrese 0)");
+		if(noProducto.equals("0"))
+		{
+			return;
+		}
+		IProducto producto = rest.hallarProducto(Integer.parseInt(noProducto) - 1);
+		rest.getPedidoEnCurso().agregarProducto(producto);
+		System.out.println("\nSe ha agregado el producto al pedido\n");
 	}
 	
 

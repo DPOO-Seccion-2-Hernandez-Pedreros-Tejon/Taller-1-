@@ -20,6 +20,7 @@ public class Pedido
 		direccionCliente = direccion;
 		numeroPedidos += 1;
 		idPedido = numeroPedidos;
+		itemsPedido = new ArrayList<IProducto>();
 	}
 	
 	public void agregarProducto(IProducto producto)
@@ -61,28 +62,31 @@ public class Pedido
 			txtProductos += producto.generarTextoFactura();
 		}
 		
-		return "			HAMBURGUESAS Y HAMBURGUESAS/n"
-				+ "/n"
-				+ "   ID DEL PEDIDO:		" + Integer.toString(this.getIdPedido()) + "/n"
-				+ "   NOMBRE DEL CLIENTE: 		" + nombreCliente + "/n"
-				+ "   DIRECCIÓN DE FACTURACIÓN: 		 " + direccionCliente + "/n"
-				+ "/n"
-				+ "   PRODUCTOS DE LA ORDEN 		PRECIO/n"
-				+ txtProductos + "/n"
-				+ "   VALOR NETO DEL PEDIDO:		 $" + Integer.toString(this.getPrecioNeto()) + "/n"
-				+ "   VALOR DEL IVA DEL PEDIDO:		 $" + Integer.toString(this.getPrecioIva()) + "/n"
-				+ "   VALOR TOTAL DEL PEDIDO:		 $" + Integer.toString(this.getPrecioTotal()) + "/n/n";
+		return "	HAMBURGUESAS & HAMBURGUESAS\n"
+				+ "\n"
+				+ "   ID DEL PEDIDO:		" + Integer.toString(this.getIdPedido()) + "\n"
+				+ "   NOMBRE DEL CLIENTE: 		" + nombreCliente + "\n"
+				+ "   DIRECCIÓN DE FACTURACIÓN: 	" + direccionCliente + "\n"
+				+ "\n"
+				+ "   PRODUCTOS DE LA ORDEN\n"
+				+ txtProductos + "\n"
+				+ "   VALOR NETO DEL PEDIDO:	 $" + Integer.toString(this.getPrecioNeto()) + "\n"
+				+ "   VALOR DEL IVA DEL PEDIDO:	 $" + Integer.toString(this.getPrecioIva()) + "\n"
+				+ "   VALOR TOTAL DEL PEDIDO:	 $" + Integer.toString(this.getPrecioTotal()) + "\n\n";
 	}
 	
-	public void guardarFactura(File archivo) throws IOException
+	public void guardarFactura() throws IOException
 	{
-		File file = new File("/path/to/" + "FACTURA#" + Integer.toString(idPedido) + ".txt");
+		File file = new File("facturas/FACTURA#" + Integer.toString(idPedido) + ".txt");
 		if(file.createNewFile())
+		{
 			System.out.println("File created: " + file.getName());
+		}
 		else
+		{
 			System.out.println("File already exists.");
-		
-		BufferedWriter writer = new BufferedWriter(new FileWriter("/path/to/" + "FACTURA#" + Integer.toString(idPedido) + ".txt"));
+		}
+		BufferedWriter writer = new BufferedWriter(new FileWriter("facturas/FACTURA#" + Integer.toString(idPedido) + ".txt"));
 		writer.write(this.generarTextoFactura());
 		writer.close();
 	}

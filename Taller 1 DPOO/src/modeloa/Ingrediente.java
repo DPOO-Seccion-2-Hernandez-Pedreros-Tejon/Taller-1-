@@ -24,9 +24,5 @@ public class Ingrediente
 		return costoAdicional;
 	}
 	
-	public int getCostoAdicional()
-	{
-		return 0;
-	}
 	
 }

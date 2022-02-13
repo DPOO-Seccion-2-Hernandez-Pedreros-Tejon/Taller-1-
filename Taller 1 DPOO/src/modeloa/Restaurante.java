@@ -5,45 +5,51 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
 public class Restaurante 
 {
 	
+	private ArrayList<Pedido> pedidos;
 	
+	private Pedido pedidoEnCurso;
 	
 	private ArrayList<Ingrediente> ingredientes;
 	
-	private ArrayList<ProductoMenu> productosMenu;
+	private ArrayList<ProductoAjustado> productosMenu;
 	
 	private ArrayList<Combo> combos;
 	
 	public Restaurante() 
 	{
-		
+		pedidos = new ArrayList<Pedido>();
+		ingredientes = new ArrayList<Ingrediente>();
+		productosMenu = new ArrayList<ProductoAjustado>();
+		combos = new ArrayList<Combo>();
+		pedidoEnCurso = null;
 	}
 	
 	public void iniciarPedido(String nombreCliente, String direccionCliente)
 	{	
-		
+		pedidoEnCurso = new Pedido(nombreCliente, direccionCliente);
 	}
 	
 	public void cargarInformacionRestaurante() throws FileNotFoundException, IOException
 	{
-		
-		 
 		 cargarIngredientes();
 		 
 		 cargarMenu();
 		 
 		 cargarCombos();
+		 
 	}
 	
 	private void cargarIngredientes() throws IOException,FileNotFoundException
 	{
 		
-		FileReader file = new FileReader("Data/ingredientes.txt");
+		FileReader file = new FileReader("data/ingredientes.txt");
 		BufferedReader br = new BufferedReader(file);
 		String message = "";
 		String line = br.readLine();
@@ -68,14 +74,13 @@ public class Restaurante
 		while(line != null)
 		{
 			String[] productoCosto = line.split(";");
-			productosMenu.add( new ProductoMenu(productoCosto[0], Integer.parseInt(productoCosto[1])) );
+			productosMenu.add( new ProductoAjustado(productoCosto[0], Integer.parseInt(productoCosto[1])) );
 			line = br.readLine();
 		}
 		System.out.println(message);
 		br.close();
 		
 	}
-	
 	
 	private void cargarCombos() throws IOException, FileNotFoundException
 	{
@@ -86,34 +91,167 @@ public class Restaurante
 		String line = br.readLine();
 		while(line != null)
 		{
-			String combo = line.replace("%", "");
-			String[] comboDescuentoIngredientes = combo.split(";");
+			String lineacombo = line.replace("%", "");
+			String[] comboDescuentoIngredientes = lineacombo.split(";");
 			String nombreCombo = comboDescuentoIngredientes[0];
 			String descuentoCombo = comboDescuentoIngredientes[1];
-			ArrayList<ProductoMenu> itemsCombo = new ArrayList<ProductoMenu>();
+		
 			int i = 2;
 			int max = comboDescuentoIngredientes.length;
 			
+			Combo combo = new Combo(nombreCombo, Double.parseDouble(descuentoCombo));
+			
 			while(i < max)
 			{
-				String ing = comboDescuentoIngredientes[i];
-				for(ProductoMenu producto: productosMenu)
+				String prod = comboDescuentoIngredientes[i];
+				for(ProductoAjustado producto: productosMenu)
 				{
-					if(producto.getNombre() == ing)
+					if(producto.getNombre().equals(prod))  
 					{
-						int costo = producto.getPrecio();
-						itemsCombo.add(new ProductoMenu(ing, costo));
+						combo.agregarItemACombo(producto);
+						break;
 					}
 				}
 				i ++;
 			}
 			
-			combos.add(new Combo(nombreCombo, Double.parseDouble(descuentoCombo), itemsCombo));
+			combos.add(combo);
 			
 			line = br.readLine();
 		}
 		System.out.println(message);
 		br.close();
 		
+	}
+	
+	public Pedido getPedidoEnCurso()
+	{
+		return pedidoEnCurso;
+	}
+	
+	public IProducto hallarProducto(int noProducto)
+	{
+		if(productosMenu.size() <= noProducto)
+		{
+			noProducto -= productosMenu.size();
+			return combos.get(noProducto);
+		}
+		
+		else
+		{
+			boolean seguir = true;
+			ProductoAjustado agregar = productosMenu.get(noProducto); 
+			ProductoAjustado producto = new ProductoAjustado(agregar.getNombre(), agregar.getPrecio());
+			while(seguir)
+			{
+				System.out.println("\n1. Sí");
+				System.out.println("2. No");
+				String modificar = input("Quieres hacer una modificación a este producto");
+			
+				if(modificar.equals("1"))
+				{
+					System.out.println("\n1. Agregar ingredientes (costo adicional)");
+					System.out.println("2. Eliminar ingredientes");
+					modificar = input("Cómo quieres modificar este producto");
+				
+					if(modificar.equals("1"))
+					{
+						this.mostrarIngredientesConPrecio();
+						String noIngrediente = input("Escoja el número del ingrediente a agregar");
+						Ingrediente ingrediente = ingredientes.get(Integer.parseInt(noIngrediente) - 1);
+						producto.agregarIngrediente(ingrediente);
+						System.out.println("\nSe agregó correctamente el ingrediente\n");
+					}
+					else
+					{
+						this.mostrarIngredientesSinPrecio();
+						String noIngrediente = input("Escoja el número del ingrediente a eliminar");
+						Ingrediente ingrediente = ingredientes.get(Integer.parseInt(noIngrediente));
+						producto.eliminarIngrediente(ingrediente);
+						System.out.println("\nSe eliminó correctamente el ingrediente\n");
+					}
+				}
+				else
+				{
+					
+					seguir = false;
+				}
+			}
+			return producto;
+		}
+	}
+	
+	public void mostrarProductos()
+	{
+		System.out.println("\nPRODUCTOS DEL MENÚ\n");
+		
+		int i = 0;
+		for(ProductoAjustado producto: productosMenu)
+		{
+			i += 1;
+			System.out.println(Integer.toString(i) + ". " + producto.getNombre() + "     $" + Integer.toString(producto.getPrecio()) );
+		}
+		
+		System.out.println("\nCOMBOS\n");
+		
+		for(Combo combo: combos)
+		{
+			i += 1;
+			System.out.println(Integer.toString(i) + ". " + combo.getNombre() + "     $" + Integer.toString(combo.getPrecio()) );
+		}
+		
+	}
+	
+	public void mostrarIngredientesConPrecio()
+	{
+		System.out.println("\nINGREDIENTES DEL MENÚ\n");
+		
+		int i = 0;
+		for(Ingrediente ingrediente: ingredientes)
+		{
+			i += 1;
+			System.out.println(Integer.toString(i) + ". " + ingrediente.getNombre() + "     $" + Integer.toString(ingrediente.getCosto()) );
+		}
+	}
+	
+	public void mostrarIngredientesSinPrecio()
+	{
+		System.out.println("\nINGREDIENTES DEL MENÚ\n");
+		
+		int i = 0;
+		for(Ingrediente ingrediente: ingredientes)
+		{
+			i += 1;
+			System.out.println(Integer.toString(i) + ". " + ingrediente.getNombre());
+		}
+	}
+	
+	public void cerrarYGuardarPedido() throws IOException
+	{
+		if(pedidoEnCurso == null)
+		{
+			System.out.println("\nTiene que tener un pedido en curso para agregar productos\n");
+			return;
+		}
+		pedidos.add(pedidoEnCurso);
+		pedidoEnCurso.guardarFactura();
+		pedidoEnCurso = null;
+		System.out.println("\nSe ha guardado la factura y se ha cerrado el pedido\n");
+	}
+	
+	public String input(String mensaje)
+	{
+		try
+		{
+			System.out.print(mensaje + ": ");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			return reader.readLine();
+		}
+		catch (IOException e)
+		{
+			System.out.println("Error leyendo de la consola");
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
