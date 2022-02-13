@@ -10,13 +10,12 @@ public class Combo implements IProducto
 	private ArrayList<ProductoMenu> itemsCombo;
 	private int precio = 0;
 	
-	public Combo(String nombreCo, double descuentoCo)
+	public Combo(String nombreCo, double descuentoCo, ArrayList<ProductoMenu> itemsCo)
 	{
 		nombreCombo = nombreCo;
 		descuento = descuentoCo;
-		itemsCombo = new ArrayList<ProductoMenu>();
+		itemsCombo = itemsCo;
 	}
-
 	public void agregarItemACombo(ProductoMenu itemCombo)
 	{
 		itemsCombo.add(itemCombo);

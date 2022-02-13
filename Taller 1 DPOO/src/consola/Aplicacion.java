@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
+import src.modeloa.Ingrediente;
 import src.modeloa.Restaurante;
 
 public class Aplicacion 
 {
+	
 	private Restaurante rest = new Restaurante();
 	
 	public void ejecutarAplicacion() throws FileNotFoundException, IOException

@@ -7,10 +7,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class Restaurante 
 {
-
+	
+	
+	
 	private ArrayList<Ingrediente> ingredientes;
+	
+	private ArrayList<ProductoMenu> productosMenu;
+	
+	private ArrayList<Combo> combos;
 	
 	public Restaurante() 
 	{
@@ -22,13 +29,15 @@ public class Restaurante
 		
 	}
 	
-	
 	public void cargarInformacionRestaurante() throws FileNotFoundException, IOException
 	{
 		
+		 
+		 cargarIngredientes();
+		 
+		 cargarMenu();
+		 
 		 cargarCombos();
-		 //cargarIngredientes();
-		 //cargarMenu();
 	}
 	
 	private void cargarIngredientes() throws IOException,FileNotFoundException
@@ -40,7 +49,8 @@ public class Restaurante
 		String line = br.readLine();
 		while(line != null)
 		{
-			message += line + " ";
+			String[] ingredienteCosto = line.split(";");
+			ingredientes.add( new Ingrediente(ingredienteCosto[0], Integer.parseInt(ingredienteCosto[1])) );
 			line = br.readLine();
 		}
 		System.out.println(message);
@@ -57,7 +67,8 @@ public class Restaurante
 		String line = br.readLine();
 		while(line != null)
 		{
-			message += line + " ";
+			String[] productoCosto = line.split(";");
+			productosMenu.add( new ProductoMenu(productoCosto[0], Integer.parseInt(productoCosto[1])) );
 			line = br.readLine();
 		}
 		System.out.println(message);
@@ -75,7 +86,30 @@ public class Restaurante
 		String line = br.readLine();
 		while(line != null)
 		{
-			message += line + " ";
+			String combo = line.replace("%", "");
+			String[] comboDescuentoIngredientes = combo.split(";");
+			String nombreCombo = comboDescuentoIngredientes[0];
+			String descuentoCombo = comboDescuentoIngredientes[1];
+			ArrayList<ProductoMenu> itemsCombo = new ArrayList<ProductoMenu>();
+			int i = 2;
+			int max = comboDescuentoIngredientes.length;
+			
+			while(i < max)
+			{
+				String ing = comboDescuentoIngredientes[i];
+				for(ProductoMenu producto: productosMenu)
+				{
+					if(producto.getNombre() == ing)
+					{
+						int costo = producto.getPrecio();
+						itemsCombo.add(new ProductoMenu(ing, costo));
+					}
+				}
+				i ++;
+			}
+			
+			combos.add(new Combo(nombreCombo, Double.parseDouble(descuentoCombo), itemsCombo));
+			
 			line = br.readLine();
 		}
 		System.out.println(message);
