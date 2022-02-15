@@ -77,7 +77,7 @@ public class Pedido
 	
 	public void guardarFactura() throws IOException
 	{
-		File file = new File("facturas/FACTURA#" + Integer.toString(idPedido) + ".txt");
+		File file = new File("FACTURA#" + Integer.toString(idPedido) + ".txt");
 		if(file.createNewFile())
 		{
 			System.out.println("File created: " + file.getName());
@@ -86,7 +86,7 @@ public class Pedido
 		{
 			System.out.println("File already exists.");
 		}
-		BufferedWriter writer = new BufferedWriter(new FileWriter("facturas/FACTURA#" + Integer.toString(idPedido) + ".txt"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("FACTURA#" + Integer.toString(idPedido) + ".txt"));
 		writer.write(this.generarTextoFactura());
 		writer.close();
 	}
