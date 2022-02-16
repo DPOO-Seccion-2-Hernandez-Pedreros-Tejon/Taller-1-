@@ -144,15 +144,17 @@ public class Restaurante
 			ProductoAjustado producto = new ProductoAjustado(agregar.getNombre(), agregar.getPrecio());
 			while(seguir)
 			{
+				System.out.println("Quieres hacer una modificación a este producto");
 				System.out.println("\n1. Sí");
 				System.out.println("2. No");
-				String modificar = input("Quieres hacer una modificación a este producto");
+				String modificar = input("Seleccione una opción: ");
 			
 				if(modificar.equals("1"))
 				{
+					System.out.println("Cómo quieres modificar este producto");
 					System.out.println("\n1. Agregar ingredientes (costo adicional)");
 					System.out.println("2. Eliminar ingredientes");
-					modificar = input("Cómo quieres modificar este producto");
+					modificar = input("Seleccione una opción: ");
 				
 					if(modificar.equals("1"))
 					{
@@ -166,7 +168,7 @@ public class Restaurante
 					{
 						this.mostrarIngredientesSinPrecio();
 						String noIngrediente = input("Escoja el número del ingrediente a eliminar");
-						Ingrediente ingrediente = ingredientes.get(Integer.parseInt(noIngrediente));
+						Ingrediente ingrediente = ingredientes.get(Integer.parseInt(noIngrediente) - 1);
 						producto.eliminarIngrediente(ingrediente);
 						System.out.println("\nSe eliminó correctamente el ingrediente\n");
 					}
